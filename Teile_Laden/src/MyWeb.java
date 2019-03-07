@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class MyWeb {
 	
+// Some global variables 
 	JFrame frame = new JFrame();
 	JLabel jlabel_lager = new JLabel("");
 	JLabel jlabel_preis = new JLabel("");
@@ -25,12 +26,15 @@ public class MyWeb {
 	String verfügbarkeit;
     Button button = new Button();
 	
+// Constructor = Swing
 	public MyWeb() throws IOException {
-		
+
+// Read Database-File
 		readFile();
 		
 		//frame.setUndecorated(true);
 		
+// Create objects
 	    JPanel mainPanel = new JPanel();
 	    JPanel secondPanel = new JPanel();
 	    JPanel rightPanel = new JPanel(new GridLayout(5, 1));
@@ -45,6 +49,8 @@ public class MyWeb {
 	    JLabel info_text = new JLabel("Bitte geben Sie die Ersatzteilnummer ein");
 	    Font font1 = new Font("SansSerif", Font.BOLD, 20);
 	    Font font2 = new Font("SansSerif", Font.BOLD, 40);
+	    
+// Please ignore all these dummies
 		JLabel dummy1 = new JLabel("");
 		JLabel dummy2 = new JLabel("");
 		JLabel dummy3 = new JLabel("");
@@ -82,6 +88,8 @@ public class MyWeb {
 	    info_text.setHorizontalAlignment(SwingConstants.CENTER);
 	    info_text.setFont(font2);
 	    teil_suchen_button.setFont(font1);
+	    
+// Add objects to frame/panel
 	    rightPanel.add(lowerPanel);
 	    rightPanel.add(lowerPanel2);
 	    rightPanel.add(lowerPanel3);
@@ -111,6 +119,8 @@ public class MyWeb {
 		lowerPanel4.add(dummy17);
 		lowerPanel4.add(dummy18);
 		lowerPanel4.add(dummy15);
+		
+// Search file if user presses the button
 	    teil_suchen_button.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		teilenummer = teil_nummer.getText();
@@ -120,14 +130,20 @@ public class MyWeb {
 	    		jlabel_verfügbarkeit.setFont(font1);
 	        }
 	    });
+	    
+// Load URL
 	    browser.loadURL("https://www.yamaha-motor.eu/de/de/services/ersatzteilkatalog/#secondary-nav-check");
 	    frame.setVisible(true);
+	    
+// Delete text of JTextField if user clicks on it
 	    teil_nummer.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent e) {
 	    		teil_nummer.setText("");
 	    		
 	        }
 	    });
+	    
+// Update Browser if clicked on link (used to open Pop-up)
 		browser.setPopupHandler(new com.teamdev.jxbrowser.chromium.PopupHandler() {
 			public com.teamdev.jxbrowser.chromium.PopupContainer handlePopup(com.teamdev.jxbrowser.chromium.PopupParams params) {
 		        return new com.teamdev.jxbrowser.chromium.PopupContainer() {
@@ -145,24 +161,29 @@ public class MyWeb {
 		});
 	}
 	
+// Set description
 	public void setBeschreibung() {
 		
 	}
 	
+// Set description if spare part is available
 	public void BestellungVerfügbar() {
 		
 	}
 	
+// Set description if spare part isn't available
 	public void BestellungNichtVerfügbar() {
 		
 	}
 	
+// Get price
 	public void getPreis() {
 		String tokens[] = teil_gefunden.split(";");
 		preis = tokens[8];
 		jlabel_preis.setText("Preis: " + preis + " €");
 	}
 	
+// Get location
 	public void getLagerort() {
 		String tokens[] = teil_gefunden.split(";");
 		lagerort = tokens[35];
@@ -179,6 +200,7 @@ public class MyWeb {
 		}
 	}
 	
+// Search spare parts
 	public void teil_suchen() {
 		if(Teile_File.contains(teilenummer)) {
 			teil_gefunden = Teile_File.substring(Teile_File.indexOf(teilenummer));
@@ -197,19 +219,15 @@ public class MyWeb {
 		}
 	}
 	
+// Read Database-File
 	public void readFile() throws IOException {
 		Scanner scanner = new Scanner(new File("Teile.txt"));
 		Teile_File = scanner.useDelimiter("\\A").next();
 		scanner.close();
 	}
 	
+// Main
 	public static void main(String[] args) throws IOException {
 		MyWeb start = new MyWeb();
 	}
 }
-
-/*
- * Beschreibung
- * Neustarten nach bestimmter Zeit
- * Ausdrucken (Formular bei nicht verfügbar)
- */
