@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.TimerTask;
 
 public class MyWeb {
 	
@@ -159,6 +160,18 @@ public class MyWeb {
 		        };
 			}
 		});
+		
+// Restart program after 5 min (300000 ms = 5 min)
+		new java.util.Timer().schedule(new TimerTask() {
+			public void run() {
+				frame.dispose();
+				try {
+					MyWeb test = new MyWeb();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}, 300000);
 	}
 	
 // Set description
@@ -229,5 +242,6 @@ public class MyWeb {
 // Main
 	public static void main(String[] args) throws IOException {
 		MyWeb start = new MyWeb();
+		
 	}
 }
