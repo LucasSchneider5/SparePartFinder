@@ -39,17 +39,29 @@ public class MyWeb {
 	    JPanel mainPanel = new JPanel();
 	    JPanel secondPanel = new JPanel();
 	    JPanel rightPanel = new JPanel(new GridLayout(5, 1));
-	    JPanel lowerPanel = new JPanel(new GridLayout(3, 2));
-	    JPanel lowerPanel2 = new JPanel(new GridLayout(5, 2));
+	    JPanel lowerPanel = new JPanel(new GridLayout(5, 2));
+	    JPanel lowerPanel2 = new JPanel(new GridLayout(3, 2));
 	    JPanel lowerPanel3 = new JPanel(new GridLayout(5, 2));
 	    JPanel lowerPanel4 = new JPanel(new GridLayout(5, 2));
+	    JPanel lowerPanel5 = new JPanel(new GridLayout(5, 2));
 	    Browser browser = new Browser();
 	    BrowserView browserView = new BrowserView(browser);
 	    teil_nummer = new JTextField("Ersatzteilnummer:", 20);
 	    Button teil_suchen_button = new Button("Ersatzteil suchen");
-	    JLabel info_text = new JLabel("Bitte geben Sie die Ersatzteilnummer ein");
+	    JLabel Achtung = new JLabel("Achtung: Nach 5 Minuten wird aus Sicherheitsgründen das Programm neugestartet !");
+	    JLabel eins = new JLabel("1. Auf 'Ersatzteilkatalog' klicken");
+	    JLabel zwei = new JLabel("2. Auf 'Ich stimme zu' klicken");
+	    JLabel drei = new JLabel("3. Gewünschte Kategorie auswählen");
+	    JLabel vier = new JLabel("4. Informationen zum Fahrzeug eingeben");
+	    JLabel fünf = new JLabel("5. Auf 'Suchen' klicken");
+	    JLabel sechs = new JLabel("6. Fahrzeug auswählen");
+	    JLabel sieben = new JLabel("7. Gewünschtes Ersatzteil suchen");
+	    JLabel acht = new JLabel("8. Ersatzteilnummer in das Suchfeld eingeben");
+	    JLabel neun = new JLabel("9. Auf den Knop 'Ersatzteil suchen' drücken");
+	    
+	    
 	    Font font1 = new Font("SansSerif", Font.BOLD, 20);
-	    Font font2 = new Font("SansSerif", Font.BOLD, 40);
+	    Font font2 = new Font("SansSerif", Font.BOLD, 15);
 	    
 // Please ignore all these dummies
 		JLabel dummy1 = new JLabel("");
@@ -65,13 +77,6 @@ public class MyWeb {
 		JLabel dummy11 = new JLabel("");
 		JLabel dummy12 = new JLabel("");
 		JLabel dummy13 = new JLabel("");
-		JLabel dummy14 = new JLabel("");
-		JLabel dummy15 = new JLabel("");
-		JLabel dummy16 = new JLabel("");
-		JLabel dummy17 = new JLabel("");
-		JLabel dummy18 = new JLabel("");
-		JLabel dummy19 = new JLabel("");
-		JLabel dummy20 = new JLabel("");
 		
 	    //frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -85,41 +90,57 @@ public class MyWeb {
 	    secondPanel.add(rightPanel, BorderLayout.CENTER);
 	    button.setPreferredSize(new Dimension(960, 1));
 	    secondPanel.add(button, BorderLayout.NORTH);
-	    rightPanel.add(info_text);
-	    info_text.setHorizontalAlignment(SwingConstants.CENTER);
-	    info_text.setFont(font2);
+	    eins.setFont(font2);
+	    zwei.setFont(font2);
+	    drei.setFont(font2);
+	    vier.setFont(font2);
+	    fünf.setFont(font2);
+	    sechs.setFont(font2);
+	    sieben.setFont(font2);
+	    acht.setFont(font2);
+	    neun.setFont(font2);
 	    teil_suchen_button.setFont(font1);
+	    Achtung.setForeground(Color.RED);
+	    
 	    
 // Add objects to frame/panel
+	    rightPanel.add(lowerPanel5);
 	    rightPanel.add(lowerPanel);
 	    rightPanel.add(lowerPanel2);
 	    rightPanel.add(lowerPanel3);
 	    rightPanel.add(lowerPanel4);
-	    lowerPanel.add(teil_nummer);
-	    lowerPanel.add(teil_suchen_button);
-	    lowerPanel.add(dummy19);
-	    lowerPanel.add(dummy20);
-	    lowerPanel2.add(jlabel_verfügbarkeit);
-	    lowerPanel2.add(dummy2);
-		lowerPanel2.add(dummy1);
-		lowerPanel2.add(dummy5);
-		lowerPanel2.add(dummy3);
-		lowerPanel2.add(dummy6);
-		lowerPanel2.add(jlabel_preis);
-		lowerPanel3.add(dummy4);
-	    lowerPanel3.add(dummy8);
-		lowerPanel3.add(jlabel_lager);
+	    
+	    lowerPanel5.add(Achtung);
+	    lowerPanel5.add(dummy1);
+	    lowerPanel5.add(eins);
+	    lowerPanel5.add(neun);
+	    lowerPanel5.add(zwei);
+	    lowerPanel5.add(dummy2);
+	    lowerPanel5.add(drei);
+	    lowerPanel5.add(dummy3);
+	    lowerPanel5.add(vier);
+	    lowerPanel5.add(dummy4);
+	    
+	    lowerPanel.add(fünf);
+	    lowerPanel.add(dummy5);
+	    lowerPanel.add(sechs);
+	    lowerPanel.add(dummy6);
+	    lowerPanel.add(sieben);
+	    lowerPanel.add(dummy7);
+		lowerPanel.add(acht);
+		
+		lowerPanel2.add(dummy8);
+		lowerPanel2.add(dummy9);
+		lowerPanel2.add(teil_nummer);
+		lowerPanel2.add(teil_suchen_button);
+		
 		lowerPanel3.add(dummy10);
-		lowerPanel3.add(dummy9);
-		lowerPanel3.add(dummy11);
-		lowerPanel3.add(dummy7);
-		lowerPanel4.add(dummy12);
-	    lowerPanel4.add(dummy14);
-		lowerPanel4.add(dummy13);
-		lowerPanel4.add(dummy16);
-		lowerPanel4.add(dummy17);
-		lowerPanel4.add(dummy18);
-		lowerPanel4.add(dummy15);
+	    lowerPanel3.add(dummy11);
+		lowerPanel3.add(jlabel_verfügbarkeit);
+		lowerPanel3.add(dummy12);
+		lowerPanel3.add(jlabel_preis);
+		lowerPanel3.add(dummy13);
+		lowerPanel3.add(jlabel_lager);
 		
 // Search file if user presses the button
 	    teil_suchen_button.addActionListener(new ActionListener() {
@@ -172,11 +193,6 @@ public class MyWeb {
 				}
 			}
 		}, 300000);
-	}
-	
-// Set description
-	public void setBeschreibung() {
-		
 	}
 	
 // Set description if spare part is available
