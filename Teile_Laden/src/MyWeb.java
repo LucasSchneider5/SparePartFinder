@@ -6,8 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TimerTask;
 
@@ -18,10 +21,12 @@ public class MyWeb {
 	JLabel jlabel_lager = new JLabel("");
 	JLabel jlabel_preis = new JLabel("");
 	JLabel jlabel_verfügbarkeit = new JLabel("");
+	JLabel jlabel_name = new JLabel("");
 	String teilenummer;
 	JTextField teil_nummer;
 	String Teile_File;
 	String teil_gefunden;
+	String name;
 	String preis;
 	String lagerort;
 	String verfügbarkeit;
@@ -35,20 +40,23 @@ public class MyWeb {
 		
 		//frame.setUndecorated(true);
 		
-// Create objects
+// Create swing objects
 	    JPanel mainPanel = new JPanel();
 	    JPanel secondPanel = new JPanel();
 	    JPanel rightPanel = new JPanel(new GridLayout(5, 1));
-	    JPanel lowerPanel = new JPanel(new GridLayout(5, 2));
-	    JPanel lowerPanel2 = new JPanel(new GridLayout(3, 2));
-	    JPanel lowerPanel3 = new JPanel(new GridLayout(5, 2));
-	    JPanel lowerPanel4 = new JPanel(new GridLayout(5, 2));
-	    JPanel lowerPanel5 = new JPanel(new GridLayout(5, 2));
+	    JPanel rechtsPanel1 = new JPanel(new GridLayout(3, 1));
+	    JPanel rechtsPanel2 = new JPanel(new GridLayout(5, 2));
+	    JPanel rechtsPanel3 = new JPanel(new GridLayout(5, 2));
+	    JPanel rechtsPanel4 = new JPanel(new GridLayout(3, 2));
+	    JPanel rechtsPanel5 = new JPanel(new GridLayout(5, 2));
 	    Browser browser = new Browser();
 	    BrowserView browserView = new BrowserView(browser);
 	    teil_nummer = new JTextField("Ersatzteilnummer:", 20);
 	    Button teil_suchen_button = new Button("Ersatzteil suchen");
-	    JLabel Achtung = new JLabel("Achtung: Nach 5 Minuten wird aus Sicherheitsgründen das Programm neugestartet !");
+	    JLabel Achtung = new JLabel("Achtung: Nach 5 Minuten wird aus Sicherheitsgründen das Programm automatisch neugestartet !");
+	    JLabel ersteZeile = new JLabel("Verfügbarkeit und Preis von Ersatzteilen überprüfen");
+	    JLabel Beschreibung = new JLabel("Beschreibung:");
+	    JLabel Beachten = new JLabel("(Bindestriche sowie Groß-und Kleinschreibung beachten !)");
 	    JLabel eins = new JLabel("1. Auf 'Ersatzteilkatalog' klicken");
 	    JLabel zwei = new JLabel("2. Auf 'Ich stimme zu' klicken");
 	    JLabel drei = new JLabel("3. Gewünschte Kategorie auswählen");
@@ -57,11 +65,15 @@ public class MyWeb {
 	    JLabel sechs = new JLabel("6. Fahrzeug auswählen");
 	    JLabel sieben = new JLabel("7. Gewünschtes Ersatzteil suchen");
 	    JLabel acht = new JLabel("8. Ersatzteilnummer in das Suchfeld eingeben");
-	    JLabel neun = new JLabel("9. Auf den Knop 'Ersatzteil suchen' drücken");
+	    JLabel neun = new JLabel("9. Auf den Knop 'Ersatzteil suchen' klicken");
 	    
-	    
+// Fonts
+	    Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
+	    fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 	    Font font1 = new Font("SansSerif", Font.BOLD, 20);
 	    Font font2 = new Font("SansSerif", Font.BOLD, 15);
+	    Font font3 = new Font("SansSerif", Font.BOLD, 30).deriveFont(fontAttributes);;
+	    Font font4 = new Font("SansSerif", Font.BOLD, 20).deriveFont(fontAttributes);
 	    
 // Please ignore all these dummies
 		JLabel dummy1 = new JLabel("");
@@ -76,13 +88,15 @@ public class MyWeb {
 		JLabel dummy10 = new JLabel("");
 		JLabel dummy11 = new JLabel("");
 		JLabel dummy12 = new JLabel("");
-		JLabel dummy13 = new JLabel("");
 		
+// Default swing stuff
 	    //frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	    frame.setLocationRelativeTo(null);	    
 	    mainPanel.setLayout(new BorderLayout());
+	    
+// Add JPanel to JFrame/JPanel
 	    frame.add(mainPanel); 
 	    mainPanel.add(browserView, BorderLayout.CENTER);
 	    secondPanel.setLayout(new BorderLayout());  
@@ -90,6 +104,8 @@ public class MyWeb {
 	    secondPanel.add(rightPanel, BorderLayout.CENTER);
 	    button.setPreferredSize(new Dimension(960, 1));
 	    secondPanel.add(button, BorderLayout.NORTH);
+	    
+// Set font, color and alignment of JLabel
 	    eins.setFont(font2);
 	    zwei.setFont(font2);
 	    drei.setFont(font2);
@@ -101,46 +117,63 @@ public class MyWeb {
 	    neun.setFont(font2);
 	    teil_suchen_button.setFont(font1);
 	    Achtung.setForeground(Color.RED);
-	    
+	    ersteZeile.setForeground(Color.RED);
+	    Achtung.setFont(font1);
+	    ersteZeile.setFont(font3);
+	    Achtung.setHorizontalAlignment(JLabel.CENTER);
+	    ersteZeile.setHorizontalAlignment(JLabel.CENTER);
+	    Beschreibung.setFont(font4);
+	    Beachten.setFont(font2);
+	    Beachten.setForeground(Color.RED);
 	    
 // Add objects to frame/panel
-	    rightPanel.add(lowerPanel5);
-	    rightPanel.add(lowerPanel);
-	    rightPanel.add(lowerPanel2);
-	    rightPanel.add(lowerPanel3);
-	    rightPanel.add(lowerPanel4);
+// Right Panel
+	    rightPanel.add(rechtsPanel1);
+	    rightPanel.add(rechtsPanel2);
+	    rightPanel.add(rechtsPanel3);
+	    rightPanel.add(rechtsPanel4);
+	    rightPanel.add(rechtsPanel5);
 	    
-	    lowerPanel5.add(Achtung);
-	    lowerPanel5.add(dummy1);
-	    lowerPanel5.add(eins);
-	    lowerPanel5.add(neun);
-	    lowerPanel5.add(zwei);
-	    lowerPanel5.add(dummy2);
-	    lowerPanel5.add(drei);
-	    lowerPanel5.add(dummy3);
-	    lowerPanel5.add(vier);
-	    lowerPanel5.add(dummy4);
+// Right Panel 1
+	    rechtsPanel1.add(ersteZeile);
+	    rechtsPanel1.add(Achtung);
+	    rechtsPanel1.add(Beschreibung);
 	    
-	    lowerPanel.add(fünf);
-	    lowerPanel.add(dummy5);
-	    lowerPanel.add(sechs);
-	    lowerPanel.add(dummy6);
-	    lowerPanel.add(sieben);
-	    lowerPanel.add(dummy7);
-		lowerPanel.add(acht);
+// Right Panel 2
+	    rechtsPanel2.add(eins);
+	    rechtsPanel2.add(neun);
+	    rechtsPanel2.add(zwei);
+	    rechtsPanel2.add(dummy1);
+	    rechtsPanel2.add(drei);
+	    rechtsPanel2.add(dummy2);
+	    rechtsPanel2.add(vier);
+	    rechtsPanel2.add(dummy3);
+	    rechtsPanel2.add(fünf);
+	    rechtsPanel2.add(dummy4);
+	    
+// Right Panel 3
+	    rechtsPanel3.add(sechs);
+	    rechtsPanel3.add(dummy5);
+	    rechtsPanel3.add(sieben);
+	    rechtsPanel3.add(dummy6);
+	    rechtsPanel3.add(acht);
+	    rechtsPanel3.add(dummy7);
+	    rechtsPanel3.add(Beachten);
 		
-		lowerPanel2.add(dummy8);
-		lowerPanel2.add(dummy9);
-		lowerPanel2.add(teil_nummer);
-		lowerPanel2.add(teil_suchen_button);
+// Right Panel 4
+	    rechtsPanel4.add(dummy8);
+	    rechtsPanel4.add(dummy9);
+	    rechtsPanel4.add(teil_nummer);
+	    rechtsPanel4.add(teil_suchen_button);
 		
-		lowerPanel3.add(dummy10);
-	    lowerPanel3.add(dummy11);
-		lowerPanel3.add(jlabel_verfügbarkeit);
-		lowerPanel3.add(dummy12);
-		lowerPanel3.add(jlabel_preis);
-		lowerPanel3.add(dummy13);
-		lowerPanel3.add(jlabel_lager);
+// Right Panel 5
+	    rechtsPanel5.add(jlabel_verfügbarkeit);
+	    rechtsPanel5.add(dummy10);
+	    rechtsPanel5.add(jlabel_name);
+	    rechtsPanel5.add(dummy11);
+	    rechtsPanel5.add(jlabel_preis);
+	    rechtsPanel5.add(dummy12);
+	    rechtsPanel5.add(jlabel_lager);
 		
 // Search file if user presses the button
 	    teil_suchen_button.addActionListener(new ActionListener() {
@@ -150,6 +183,7 @@ public class MyWeb {
 	    		jlabel_lager.setFont(font1);
 	    		jlabel_preis.setFont(font1);
 	    		jlabel_verfügbarkeit.setFont(font1);
+	    		jlabel_name.setFont(font1);
 	        }
 	    });
 	    
@@ -195,14 +229,11 @@ public class MyWeb {
 		}, 300000);
 	}
 	
-// Set description if spare part is available
-	public void BestellungVerfügbar() {
-		
-	}
-	
-// Set description if spare part isn't available
-	public void BestellungNichtVerfügbar() {
-		
+// Get name
+	public void getName() {
+		String tokens[] = teil_gefunden.split(";");
+		name = tokens[2];
+		jlabel_name.setText("Bezeichnung: " + name);
 	}
 	
 // Get price
@@ -238,6 +269,7 @@ public class MyWeb {
 			jlabel_verfügbarkeit.setForeground(Color.GREEN);
     		getPreis();
     		getLagerort();
+    		getName();
 		}
 		else {
 			verfügbarkeit = "Nicht auf Lager";
@@ -245,6 +277,7 @@ public class MyWeb {
 			jlabel_verfügbarkeit.setForeground(Color.RED);
 			jlabel_preis.setText("");
 			jlabel_lager.setText("");
+			jlabel_name.setText("");
 		}
 	}
 	
@@ -258,6 +291,5 @@ public class MyWeb {
 // Main
 	public static void main(String[] args) throws IOException {
 		MyWeb start = new MyWeb();
-		
 	}
 }
