@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,6 +35,9 @@ public class MyWeb {
 	String lagerort;
 	String verfügbarkeit;
     Button button = new Button();
+	JPanel Bestellung;
+	JPanel Bezeichnungen;
+	JPanel Ende;
 	
 // Constructor = Swing
 	public MyWeb() throws IOException {
@@ -52,7 +59,12 @@ public class MyWeb {
 	    Browser browser = new Browser();
 	    BrowserView browserView = new BrowserView(browser);
 	    teil_nummer = new JTextField("Ersatzteilnummer:", 20);
+	    JTextField Name = new JTextField("Name:", 20);
+	    JTextField Telefonnummer = new JTextField("Telefonnummer:", 20);
+	    JTextField EMail = new JTextField("E-Mail:", 20);
 	    Button teil_suchen_button = new Button("Ersatzteil suchen");
+	    Button bestellung_abgeben = new Button("Artikel bestellen");
+	    Button drucken = new Button("Bestellung abgeben");
 	    JLabel Achtung = new JLabel("Achtung: Nach 5 Minuten wird aus Sicherheitsgründen das Programm automatisch neugestartet !");
 	    JLabel ersteZeile = new JLabel("Verfügbarkeit und Preis von Ersatzteilen überprüfen");
 	    JLabel Beschreibung = new JLabel("Beschreibung:");
@@ -88,6 +100,7 @@ public class MyWeb {
 		JLabel dummy10 = new JLabel("");
 		JLabel dummy11 = new JLabel("");
 		JLabel dummy12 = new JLabel("");
+		JLabel dummy13 = new JLabel("");
 		
 // Default swing stuff
 	    //frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -125,6 +138,8 @@ public class MyWeb {
 	    Beschreibung.setFont(font4);
 	    Beachten.setFont(font2);
 	    Beachten.setForeground(Color.RED);
+	    bestellung_abgeben.setFont(font1);
+	    drucken.setFont(font1);
 	    
 // Add objects to frame/panel
 // Right Panel
@@ -174,6 +189,7 @@ public class MyWeb {
 	    rechtsPanel5.add(jlabel_preis);
 	    rechtsPanel5.add(dummy12);
 	    rechtsPanel5.add(jlabel_lager);
+	    rechtsPanel5.add(dummy13);
 		
 // Search file if user presses the button
 	    teil_suchen_button.addActionListener(new ActionListener() {
@@ -184,7 +200,56 @@ public class MyWeb {
 	    		jlabel_preis.setFont(font1);
 	    		jlabel_verfügbarkeit.setFont(font1);
 	    		jlabel_name.setFont(font1);
+	    		rechtsPanel5.add(bestellung_abgeben);
 	        }
+	    });
+
+// Switch to order menu
+	    bestellung_abgeben.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		rightPanel.remove(rechtsPanel4);
+	    		rightPanel.remove(rechtsPanel5);
+	    		rightPanel.revalidate();
+	    		rightPanel.repaint();
+	    		Bezeichnungen = new JPanel(new GridLayout(5, 1));
+	    		Bestellung = new JPanel(new GridLayout(5, 1));
+	    		rightPanel.add(Bezeichnungen);
+	    		rightPanel.add(Bestellung);
+	    		Bezeichnungen.add(jlabel_verfügbarkeit);
+	    		Bezeichnungen.add(jlabel_name);
+	    		Bezeichnungen.add(jlabel_preis);
+	    		Bezeichnungen.add(jlabel_lager);
+	    		Bestellung.add(Name);
+	    		Bestellung.add(Telefonnummer);
+	    		Bestellung.add(EMail);
+	    		Bestellung.add(drucken);
+	    	}
+	    });
+	    
+// print
+	    drucken.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		JLabel name = new JLabel("Name: " + Name.getText());
+	    		JLabel telefonnummer = new JLabel("Telefonnummer: " + Telefonnummer.getText());
+	    		JLabel email = new JLabel("E-Mail: " + EMail.getText());
+	    	    name.setFont(font1);
+	    	    telefonnummer.setFont(font1);
+	    	    email.setFont(font1);
+	    		rightPanel.remove(Bestellung);
+	    		rightPanel.remove(Bezeichnungen);
+	    		rightPanel.revalidate();
+	    		rightPanel.repaint();
+	    		Ende = new JPanel(new GridLayout(7, 1));
+	    		rightPanel.add(Ende);
+	    		Ende.add(jlabel_verfügbarkeit);
+	    		Ende.add(jlabel_name);
+	    		Ende.add(jlabel_preis);
+	    		Ende.add(jlabel_lager);
+	    		Ende.add(name);
+	    		Ende.add(telefonnummer);
+	    		Ende.add(email);
+	    		printComponenet(Ende);
+	    	}
 	    });
 	    
 // Load URL
@@ -195,7 +260,21 @@ public class MyWeb {
 	    teil_nummer.addMouseListener(new MouseAdapter() {
 	    	public void mouseClicked(MouseEvent e) {
 	    		teil_nummer.setText("");
-	    		
+	        }
+	    });
+	    Name.addMouseListener(new MouseAdapter() {
+	    	public void mouseClicked(MouseEvent e) {
+	    		Name.setText("");
+	        }
+	    });
+	    Telefonnummer.addMouseListener(new MouseAdapter() {
+	    	public void mouseClicked(MouseEvent e) {
+	    		Telefonnummer.setText("");
+	        }
+	    });
+	    EMail.addMouseListener(new MouseAdapter() {
+	    	public void mouseClicked(MouseEvent e) {
+	    		EMail.setText("");
 	        }
 	    });
 	    
@@ -233,7 +312,8 @@ public class MyWeb {
 	public void getName() {
 		String tokens[] = teil_gefunden.split(";");
 		name = tokens[2];
-		jlabel_name.setText("Bezeichnung: " + name);
+		String Ersatzteilnummer = teil_nummer.getText();
+		jlabel_name.setText("Bezeichnung: " + name + "  -  " + Ersatzteilnummer);
 	}
 	
 // Get price
@@ -280,6 +360,32 @@ public class MyWeb {
 			jlabel_name.setText("");
 		}
 	}
+	
+	public void printComponenet(Component component){
+		  PrinterJob pj = PrinterJob.getPrinterJob();
+		  pj.setJobName(" Print Component ");
+
+		  pj.setPrintable (new Printable() {    
+		    public int print(Graphics pg, PageFormat pf, int pageNum){
+		      if (pageNum > 0){
+		      return Printable.NO_SUCH_PAGE;
+		      }
+
+		      Graphics2D g2 = (Graphics2D) pg;
+		      g2.translate(pf.getImageableX(), pf.getImageableY());
+		      component.paint(g2);
+		      return Printable.PAGE_EXISTS;
+		    }
+		  });
+		  if (pj.printDialog() == false)
+		  return;
+
+		  try {
+		        pj.print();
+		  } catch (PrinterException ex) {
+		        // handle exception
+		  }
+		}
 	
 // Read Database-File
 	public void readFile() throws IOException {
