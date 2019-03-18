@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
@@ -38,6 +39,7 @@ public class MyWeb {
 	JPanel Bestellung;
 	JPanel Bezeichnungen;
 	JPanel Ende;
+	JPanel Neustart;
 	
 // Constructor = Swing
 	public MyWeb() throws IOException {
@@ -56,6 +58,7 @@ public class MyWeb {
 	    JPanel rechtsPanel3 = new JPanel(new GridLayout(5, 2));
 	    JPanel rechtsPanel4 = new JPanel(new GridLayout(3, 2));
 	    JPanel rechtsPanel5 = new JPanel(new GridLayout(5, 2));
+	    JPanel NeustartButton = new JPanel(new GridLayout(1, 2));
 	    Browser browser = new Browser();
 	    BrowserView browserView = new BrowserView(browser);
 	    teil_nummer = new JTextField("Ersatzteilnummer:", 20);
@@ -65,7 +68,8 @@ public class MyWeb {
 	    Button teil_suchen_button = new Button("Ersatzteil suchen");
 	    Button bestellung_abgeben = new Button("Artikel bestellen");
 	    Button drucken = new Button("Bestellung abgeben");
-	    JLabel Achtung = new JLabel("Achtung: Nach 5 Minuten wird aus Sicherheitsgründen das Programm automatisch neugestartet !");
+	    Button Restart = new Button("Neustart");
+	    JLabel NeustartBeschreibung = new JLabel("Hier klicken um zum Anfang zurückzukehren --> ");
 	    JLabel ersteZeile = new JLabel("Verfügbarkeit und Preis von Ersatzteilen überprüfen");
 	    JLabel Beschreibung = new JLabel("Beschreibung:");
 	    JLabel Beachten = new JLabel("(Bindestriche sowie Groß-und Kleinschreibung beachten !)");
@@ -78,6 +82,13 @@ public class MyWeb {
 	    JLabel sieben = new JLabel("7. Gewünschtes Ersatzteil suchen");
 	    JLabel acht = new JLabel("8. Ersatzteilnummer in das Suchfeld eingeben");
 	    JLabel neun = new JLabel("9. Auf den Knop 'Ersatzteil suchen' klicken");
+	    JLabel zehn = new JLabel("10. Falls sie den Artikel kaufen wollen, auf 'Artikel bestellen' klicken");
+	    JLabel elf = new JLabel("11. Name, Telefonnummer und E-Mail angeben");
+	    JLabel zwoelf = new JLabel("12. Auf 'Bestellung abgeben' klicken");
+	    JLabel dreizehn = new JLabel("Falls Artikel verfügbar:");
+	    JLabel vierzehn = new JLabel("13. Einem Freien Kollegen sagen, dass sie etwas bestellt haben");
+	    JLabel fuenfzehn = new JLabel("Falls Artikel nicht verfügbar:");
+	    JLabel sechszehn = new JLabel("13. Sie werden benachrichtigt, wenn der Artikel eingetroffen ist");
 	    
 // Fonts
 	    Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
@@ -86,6 +97,7 @@ public class MyWeb {
 	    Font font2 = new Font("SansSerif", Font.BOLD, 15);
 	    Font font3 = new Font("SansSerif", Font.BOLD, 30).deriveFont(fontAttributes);;
 	    Font font4 = new Font("SansSerif", Font.BOLD, 20).deriveFont(fontAttributes);
+	    Font font5 = new Font("SansSerif", Font.BOLD, 15).deriveFont(fontAttributes);
 	    
 // Please ignore all these dummies
 		JLabel dummy1 = new JLabel("");
@@ -94,13 +106,6 @@ public class MyWeb {
 		JLabel dummy4 = new JLabel("");
 		JLabel dummy5 = new JLabel("");
 		JLabel dummy6 = new JLabel("");
-		JLabel dummy7 = new JLabel("");
-		JLabel dummy8 = new JLabel("");
-		JLabel dummy9 = new JLabel("");
-		JLabel dummy10 = new JLabel("");
-		JLabel dummy11 = new JLabel("");
-		JLabel dummy12 = new JLabel("");
-		JLabel dummy13 = new JLabel("");
 		
 // Default swing stuff
 	    //frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -128,18 +133,27 @@ public class MyWeb {
 	    sieben.setFont(font2);
 	    acht.setFont(font2);
 	    neun.setFont(font2);
+	    zehn.setFont(font2);
+	    elf.setFont(font2);
+	    zwoelf.setFont(font2);
+	    dreizehn.setFont(font5);
+	    vierzehn.setFont(font2);
+	    fuenfzehn.setFont(font5);
+	    sechszehn.setFont(font2);
+	    dreizehn.setForeground(Color.GREEN);
+	    fuenfzehn.setForeground(Color.RED);
 	    teil_suchen_button.setFont(font1);
-	    Achtung.setForeground(Color.RED);
+	    NeustartBeschreibung.setForeground(Color.RED);
 	    ersteZeile.setForeground(Color.RED);
-	    Achtung.setFont(font1);
+	    NeustartBeschreibung.setFont(font1);
 	    ersteZeile.setFont(font3);
-	    Achtung.setHorizontalAlignment(JLabel.CENTER);
+	    NeustartBeschreibung.setHorizontalAlignment(JLabel.CENTER);
 	    ersteZeile.setHorizontalAlignment(JLabel.CENTER);
 	    Beschreibung.setFont(font4);
 	    Beachten.setFont(font2);
-	    Beachten.setForeground(Color.RED);
 	    bestellung_abgeben.setFont(font1);
 	    drucken.setFont(font1);
+	    Restart.setFont(font1);
 	    
 // Add objects to frame/panel
 // Right Panel
@@ -151,46 +165,49 @@ public class MyWeb {
 	    
 // Right Panel 1
 	    rechtsPanel1.add(ersteZeile);
-	    rechtsPanel1.add(Achtung);
+	    rechtsPanel1.add(NeustartButton);
 	    rechtsPanel1.add(Beschreibung);
 	    
 // Right Panel 2
 	    rechtsPanel2.add(eins);
 	    rechtsPanel2.add(neun);
 	    rechtsPanel2.add(zwei);
-	    rechtsPanel2.add(dummy1);
+	    rechtsPanel2.add(zehn);
 	    rechtsPanel2.add(drei);
-	    rechtsPanel2.add(dummy2);
+	    rechtsPanel2.add(elf);
 	    rechtsPanel2.add(vier);
-	    rechtsPanel2.add(dummy3);
+	    rechtsPanel2.add(zwoelf);
 	    rechtsPanel2.add(fünf);
-	    rechtsPanel2.add(dummy4);
+	    rechtsPanel2.add(dreizehn);
 	    
 // Right Panel 3
 	    rechtsPanel3.add(sechs);
-	    rechtsPanel3.add(dummy5);
+	    rechtsPanel3.add(vierzehn);
 	    rechtsPanel3.add(sieben);
-	    rechtsPanel3.add(dummy6);
+	    rechtsPanel3.add(fuenfzehn);
 	    rechtsPanel3.add(acht);
-	    rechtsPanel3.add(dummy7);
+	    rechtsPanel3.add(sechszehn);
 	    rechtsPanel3.add(Beachten);
 		
 // Right Panel 4
-	    rechtsPanel4.add(dummy8);
-	    rechtsPanel4.add(dummy9);
+	    rechtsPanel4.add(dummy1);
+	    rechtsPanel4.add(dummy2);
 	    rechtsPanel4.add(teil_nummer);
 	    rechtsPanel4.add(teil_suchen_button);
 		
 // Right Panel 5
 	    rechtsPanel5.add(jlabel_verfügbarkeit);
-	    rechtsPanel5.add(dummy10);
+	    rechtsPanel5.add(dummy3);
 	    rechtsPanel5.add(jlabel_name);
-	    rechtsPanel5.add(dummy11);
+	    rechtsPanel5.add(dummy4);
 	    rechtsPanel5.add(jlabel_preis);
-	    rechtsPanel5.add(dummy12);
+	    rechtsPanel5.add(dummy5);
 	    rechtsPanel5.add(jlabel_lager);
-	    rechtsPanel5.add(dummy13);
+	    rechtsPanel5.add(dummy6);
 		
+	    NeustartButton.add(NeustartBeschreibung);
+	    NeustartButton.add(Restart);
+	    
 // Search file if user presses the button
 	    teil_suchen_button.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
@@ -239,7 +256,7 @@ public class MyWeb {
 	    		rightPanel.remove(Bezeichnungen);
 	    		rightPanel.revalidate();
 	    		rightPanel.repaint();
-	    		Ende = new JPanel(new GridLayout(7, 1));
+	    		Ende = new JPanel(new GridLayout(8, 1));
 	    		rightPanel.add(Ende);
 	    		Ende.add(jlabel_verfügbarkeit);
 	    		Ende.add(jlabel_name);
@@ -248,12 +265,40 @@ public class MyWeb {
 	    		Ende.add(name);
 	    		Ende.add(telefonnummer);
 	    		Ende.add(email);
-	    		printComponenet(Ende);
+	    		
+// Print automatic (you dont have to press "ok")
+	    		Thread thread = new Thread() {
+	    			public void run() {
+	    	    		printComponenet(Ende);
+	    			}
+	    		};
+	    		thread.start();
+	    		try {
+					Robot r = new Robot();
+		    		r.delay(2000);
+		    		r.keyPress(KeyEvent.VK_ENTER);
+		    		r.keyRelease(KeyEvent.VK_ENTER);
+				} catch (AWTException e1) {
+					e1.printStackTrace();
+				}
 	    	}
 	    });
 	    
-// Load URL
-	    browser.loadURL("https://www.yamaha-motor.eu/de/de/services/ersatzteilkatalog/#secondary-nav-check");
+// Restart
+	    Restart.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		frame.dispose();
+	    		try {
+					@SuppressWarnings("unused")
+					MyWeb neustart = new MyWeb();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+	    	}
+	    });
+	    
+// Load URL (insert here your spare part catalogue) 
+	    browser.loadURL("");
 	    frame.setVisible(true);
 	    
 // Delete text of JTextField if user clicks on it
@@ -296,10 +341,11 @@ public class MyWeb {
 		});
 		
 // Restart program after 5 min (300000 ms = 5 min)
-		new java.util.Timer().schedule(new TimerTask() {
+		 new java.util.Timer().schedule(new TimerTask() {
 			public void run() {
 				frame.dispose();
 				try {
+					@SuppressWarnings("unused")
 					MyWeb test = new MyWeb();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -361,6 +407,7 @@ public class MyWeb {
 		}
 	}
 	
+// Print
 	public void printComponenet(Component component){
 		  PrinterJob pj = PrinterJob.getPrinterJob();
 		  pj.setJobName(" Print Component ");
@@ -383,19 +430,19 @@ public class MyWeb {
 		  try {
 		        pj.print();
 		  } catch (PrinterException ex) {
-		        // handle exception
 		  }
 		}
 	
 // Read Database-File
 	public void readFile() throws IOException {
-		Scanner scanner = new Scanner(new File("Teile.txt"));
+		Scanner scanner = new Scanner(new File("C:\\Teile.txt"));
 		Teile_File = scanner.useDelimiter("\\A").next();
 		scanner.close();
 	}
 	
 // Main
 	public static void main(String[] args) throws IOException {
+		@SuppressWarnings("unused")
 		MyWeb start = new MyWeb();
 	}
 }
