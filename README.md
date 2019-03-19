@@ -7,5 +7,5 @@
 **How to:**
 * Enter your spare part catalogue (It is marked, where to put the URL)
 * Put your Database in the project-tree
-* There is the possibility that you have to rework a function, in order to read the Database-file properly
+* There is the possibility that you have to rework the functions "getPreis", "getName" and "getLagerort", in order to read the Database-file properly
 
