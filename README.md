@@ -1,6 +1,6 @@
 # SparePartFinder
 
-**Search for a specific spare part by entering the part number**
+**Search for a specific spare part in your database by entering the part number**
 
 **Note: This project is not ready jet! I have to add some things and fix bugs :)**
 
