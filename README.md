@@ -9,3 +9,6 @@
 * Put your Database in the project-tree
 * There is the possibility that you have to rework the functions "getPreis", "getName" and "getLagerort", in order to read the Database-file properly
 
+**Note: JxBrowser is a proprietary software, and that is it not allowed to use this software without a license!!**
+**Get your License here: https://www.teamdev.com/jxbrowser#licensing-pricing**
+
